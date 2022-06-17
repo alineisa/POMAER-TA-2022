@@ -1,13 +1,13 @@
 function [geo,penal] = geometrico(aeronave,sim)
 %% ================================ Observacoes ================================
 % Modelo Geometrico do POMAER Tucano Regular 2021
-% Autores: Filipe FranÃ§a
+% Autores: Filipe FranÃ§a & Lucas Honorio
 
 % Eixos de referencia:
 % A origem fica no CA da asa.
 % eixo x positivo para tras
 % eixo z positivo para cima
-% Asa dividida em 2 secoes (3 perfis)
+% Asa dividida em 2 secoes (2 perfis)
 
 %  __________________ __
 % |                  |  ....      
@@ -17,11 +17,11 @@ function [geo,penal] = geometrico(aeronave,sim)
 
 
 %% -------------------- PARAMETROS DE ENTRADA DEFINIDOS -------------------
-surfacenum     	= 3;                                                        % [-] Numero de asas + EH
+surfacenum     	= 2;                                                        % [-]  asa + EH
 geo.LiftingSurface.surfacenum = surfacenum;
 
 %   ASA
-geo.LiftingSurface.h(1,1) = .135;                                        	% [m] Altura do CA da raiz da asa inferior ao solo
+geo.LiftingSurface.h(1,1) = .135;                                        	% [m] Altura do CA da raiz da asa inferior ao solo(n�o alterei pois n�o pretendo colocar enflechamento e diedro no projeto) 
 geo.LiftingSurface.e(1:2,1:3) = 0;                                          % [deg] Enflechamento de cada secao das asas 
 geo.LiftingSurface.d(1:2,1:3) = 0;                                          % [deg] Diedro de cada secao das asas
 
@@ -46,28 +46,25 @@ geo.tp.tp_CG    = .015;                                       				% [m] distanci
 %% ------------------- PARAMETROS DE ENTRADA DA FUNCAO --------------------
 % ASAS
 geo.LiftingSurface.B(1,1)  	    = aeronave.asa1(1);                         % [m] Envergadura da asa inferior
-geo.LiftingSurface.B(2,1)       = aeronave.asa2(1);                         % [m] Envergadura da asa superior
+
 
 geo.LiftingSurface.AR(1,1) 		= aeronave.asa1(2);						    % [-] Alongamento da asa inferior
-geo.LiftingSurface.AR(2,1) 		= aeronave.asa2(2);						    % [-] Alongamento da asa superior
+
 
 geo.LiftingSurface.pest(1,1)    = aeronave.asa1(3);						    % [-] Tamanho percentual da estação central da asa inferior
-geo.LiftingSurface.pest(2,1)    = aeronave.asa2(3);						    % [-] Tamanho percentual da estação central da asa superior
+
 
 geo.LiftingSurface.lamb(1,1) 	= 1;                                        % [-] Afilamento da primeira secao asa inferior
 geo.LiftingSurface.lamb(2,1) 	= 1;                                        % [-] Afilamento da primeira secao asa superior
-geo.LiftingSurface.lamb(1,2) 	= aeronave.asa1(4);                         % [-] Afilamento da segunda secao asa inferior
-geo.LiftingSurface.lamb(2,2) 	= aeronave.asa2(4);                         % [-] Afilamento da segunda secao asa superior
 
-geo.LiftingSurface.Stagger 		= aeronave.asa2(9);							% [m] Stagger entre asas em relação ao bordo de ataque
-geo.LiftingSurface.Gap 			= aeronave.asa2(10);                         % [m] Gap entre asas 
+
 
 geo.LiftingSurface.perfil(1,1)	= aeronave.asa1(5);                         % [-] Perfis da asa inferior
-geo.LiftingSurface.perfil(2,1)	= aeronave.asa2(5);						    % [-] Perfis da asa superior
+
 geo.LiftingSurface.perfil(1,2)	= aeronave.asa1(6);                         % [-] Perfis da asa inferior
-geo.LiftingSurface.perfil(2,2)	= aeronave.asa2(6);						    % [-] Perfis da asa superior
+
 geo.LiftingSurface.perfil(1,3)	= aeronave.asa1(7);                         % [-] Perfis da asa inferior
-geo.LiftingSurface.perfil(2,3)	= aeronave.asa2(7);						    % [-] Perfis da asa superior
+
 
 geo.LiftingSurface.twist(1,:) = aeronave.incid(1:3);
 geo.LiftingSurface.twist(2,:) = aeronave.incid(4:6);
@@ -97,7 +94,7 @@ geo.cg.v        = aeronave.outros(2);                                       % [-
 %% ==================== Definicao das dimensoes da asa ====================
 for i=1:surfacenum-1
     % Numero de secoes das asas
-    geo.LiftingSurface.section_num(i,1) = 2;
+    geo.LiftingSurface.section_num(i,1) = 2; %deixa 2 secoes mesmo?
     
 	% Area das asas
 	geo.LiftingSurface.Sw(i,1) = ((geo.LiftingSurface.B(i)).^2)./(geo.LiftingSurface.AR(i));
@@ -105,7 +102,7 @@ for i=1:surfacenum-1
 	% Posicao do inicio de cada secao e da ponta
     geo.LiftingSurface.b(i,1) = 0;                                                             % posicao do perfil da raiz
 	geo.LiftingSurface.b(i,2) = geo.LiftingSurface.pest(i)*geo.LiftingSurface.B(i)/2 ;         % posicao do segundo perfil (primeira - segunda secao)
-	geo.LiftingSurface.b(i,3) = geo.LiftingSurface.B(i)/2; 	                                   % posicao do terceiro perfil (segunda - terceira secao)
+	geo.LiftingSurface.b(i,3) = geo.LiftingSurface.B(i)/2; 	                                   % posicao do terceiro perfil (segunda - terceira secao) (tira essa parte?)
     
 	% cordas dos perfis de inicio de cada secao
 	geo.LiftingSurface.c(i,1) = 0.5*geo.LiftingSurface.Sw(i)/(geo.LiftingSurface.b(i,2)+((geo.LiftingSurface.b(i,3)-geo.LiftingSurface.b(i,2))*(1+geo.LiftingSurface.lamb(i,2))/2));
@@ -169,7 +166,7 @@ end
 
 geo.LiftingSurface.pos(surfacenum,1) = geo.LiftingSurface.le;
 geo.LiftingSurface.pos(surfacenum,2) = 0;
-geo.LiftingSurface.pos(surfacenum,3) = geo.LiftingSurface.pos(surfacenum,3);
+geo.LiftingSurface.pos(surfacenum,2) = geo.LiftingSurface.pos(surfacenum,2); %mudei para 2
 %% ==================== Distribuicao das malhas ===========================
 geo.LiftingSurface.Mesh.Definido = [1;1;1];  % Define se utilizara as distribuicoes pre-definidas
 
@@ -178,7 +175,7 @@ densi_central = 0.81;
 densi_ponta   = 1.00;
 densi_EH      = 1.85;
 
-% Calculo das distribuicoes de malha
+% Calculo das distribuicoes de malha 
 geo.LiftingSurface.Mesh.Ny(1,1) = floor(geo.LiftingSurface.pest(1).*2.*sim.panel.*densi_central);
 geo.LiftingSurface.Mesh.Ny(2,1) = floor(geo.LiftingSurface.pest(2).*2.*sim.panel.*densi_central);
 geo.LiftingSurface.Mesh.Ny(1,2) = floor((2*sim.panel-geo.LiftingSurface.Mesh.Ny(1,1)).*densi_ponta);
@@ -238,15 +235,11 @@ if -geo.LiftingSurface.Stagger+geo.LiftingSurface.c(1,1)> geo.comprimento || geo
 	disp('Corda da asa inferior maior que o limite de comprimento');
 elseif geo.LiftingSurface.Stagger+geo.LiftingSurface.c(2,1)> geo.comprimento || geo.LiftingSurface.c(2,1)>geo.comprimento
 	penal = 1;
-	disp('Corda da asa superior maior que o limite de comprimento');
-elseif geo.LiftingSurface.c(1,3)<=0.15
-	penal = 1;
+%tirei a condicao da asa superior(tentando deixar monoplano em todo o codigo)
     disp('Corda da ponta menor que 15 cm (asa inferiror)');
 elseif geo.LiftingSurface.c(2,3)<=0.15
 	penal = 1;
-    disp('Corda da ponta menor que 15 cm (asa superior)');
-else
-	penal = 0;
+
 end
 
 end
