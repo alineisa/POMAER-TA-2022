@@ -54,9 +54,8 @@ geo.LiftingSurface.AR(1,1) 		= aeronave.asa1(2);						    % [-] Alongamento da a
 geo.LiftingSurface.pest(1,1)    = aeronave.asa1(3);						    % [-] Tamanho percentual da estaÃ§Ã£o central da asa inferior
 
 
-geo.LiftingSurface.lamb(1,1) 	= 1;                                        % [-] Afilamento da primeira secao asa inferior
-geo.LiftingSurface.lamb(2,1) 	= 1;                                        % [-] Afilamento da primeira secao asa superior
-
+geo.LiftingSurface.lamb(1,1) 	= 1;                                        % [-] Afilamento da primeira secao asa 
+geo.LiftingSurface.lamb(1,2) 	= aeronave.asa1(4);                                      % [-] Afilamento da segunda secao asa
 
 
 geo.LiftingSurface.perfil(1,1)	= aeronave.asa1(5);                         % [-] Perfis da asa inferior
@@ -65,9 +64,13 @@ geo.LiftingSurface.perfil(1,2)	= aeronave.asa1(6);                         % [-]
 
 geo.LiftingSurface.perfil(1,3)	= aeronave.asa1(7);                         % [-] Perfis da asa inferior
 
+%pode colocar no vetor aeronave.asa1 se quiser
+geo.LiftingSurface.twist(1,1) = aeronave.asa1(9);
+geo.LiftingSurface.twist(1,2) = aeronave.asa1(10);
+geo.LiftingSurface.twist(1,3) = aeronave.asa1(11);
 
-geo.LiftingSurface.twist(1,:) = aeronave.incid(1:3);
-geo.LiftingSurface.twist(2,:) = aeronave.incid(4:6);
+geo.LiftingSurface.twist(2,1) = aeronave.eh(7);
+geo.LiftingSurface.twist(2,2) = aeronave.eh(8);
 
 % EMPENAGEM HORIZONTAL
 geo.LiftingSurface.B(surfacenum,1)          = aeronave.eh(1);               % [m] Envergadura da EH
@@ -94,7 +97,7 @@ geo.cg.v        = aeronave.outros(2);                                       % [-
 %% ==================== Definicao das dimensoes da asa ====================
 for i=1:surfacenum-1
     % Numero de secoes das asas
-    geo.LiftingSurface.section_num(i,1) = 2; %deixa 2 secoes mesmo?
+    geo.LiftingSurface.section_num(i,1) = 2; %deixa 2 secoes mesmo? (vc vai analisar o que é mais válido)
     
 	% Area das asas
 	geo.LiftingSurface.Sw(i,1) = ((geo.LiftingSurface.B(i)).^2)./(geo.LiftingSurface.AR(i));
@@ -110,7 +113,7 @@ for i=1:surfacenum-1
 	geo.LiftingSurface.c(i,3) = geo.LiftingSurface.c(i,2)*geo.LiftingSurface.lamb(i,2);
 
 	% angulos de torcao dos perfis de inicio de cada secao
-    geo.LiftingSurface.incidence(i,1) = 0;
+    geo.LiftingSurface.incidence(i,1) = 0; %(vai otm?)
 
 	% Areas de cada secao
     geo.LiftingSurface.S(i,1)   = (geo.LiftingSurface.c(i,1) + geo.LiftingSurface.c(i,2))*(geo.LiftingSurface.b(i,2)-geo.LiftingSurface.b(i,1))/2;
@@ -124,11 +127,16 @@ geo.LiftingSurface.pos(1,1) = 0;
 geo.LiftingSurface.pos(1,2) = 0;
 geo.LiftingSurface.pos(1,3) = 0;
 
-geo.LiftingSurface.pos(2,1) = geo.LiftingSurface.Stagger+(geo.LiftingSurface.c(2,1)*0.25)-(geo.LiftingSurface.c(1,1)*0.25);
-geo.LiftingSurface.pos(2,2) = 0;
-geo.LiftingSurface.pos(2,3) = geo.LiftingSurface.Gap;
+%nao tem stagger nem gap pois nao tem duas asas, essa posicao esta
+%relacionada a fatores da eh
+%geo.LiftingSurface.pos(2,1) = geo.LiftingSurface.Stagger+(geo.LiftingSurface.c(2,1)*0.25)-(geo.LiftingSurface.c(1,1)*0.25);
+%geo.LiftingSurface.pos(2,2) = 0;
+%geo.LiftingSurface.pos(2,3) = geo.LiftingSurface.Gap;
 
-geo.comprimento = 3.2 - geo.LiftingSurface.B(1,1) - 0.01;
+
+%esse comprimento era pra regular, pois tinham limitação de comp
+%geo.comprimento = 3.2 - geo.LiftingSurface.B(1,1) - 0.01;
+
 %% ==================== Definicao das dimensoes da eh =====================
 % Numero de secoes da empenagem horizontal
 geo.LiftingSurface.section_num(surfacenum,1) = 1;
@@ -157,16 +165,18 @@ geo.LiftingSurface.S(surfacenum,1) = (geo.LiftingSurface.c(surfacenum,1) + geo.L
 geo.LiftingSurface.Sw(surfacenum,1) = 2*sum(geo.LiftingSurface.S(surfacenum,:));
 geo.LiftingSurface.AR(surfacenum,1) = (geo.LiftingSurface.B(surfacenum)^2)/geo.LiftingSurface.Sw(surfacenum);
 
+%Nao tem stagger pois nao tem asa superior, entao a altura da EH nao
+%depende dele
 % Posicionamento da empenagem
-if geo.LiftingSurface.Stagger <= 0
-    geo.LiftingSurface.le = geo.comprimento + geo.LiftingSurface.Stagger - geo.LiftingSurface.c(1,1)*0.25 - geo.LiftingSurface.c(surfacenum,1)*0.75;
-else
-    geo.LiftingSurface.le = geo.comprimento - geo.LiftingSurface.c(1,1)*0.25 - geo.LiftingSurface.c(surfacenum,1)*0.75;
-end
+%if geo.LiftingSurface.Stagger <= 0
+ %   geo.LiftingSurface.le = geo.comprimento + geo.LiftingSurface.Stagger - geo.LiftingSurface.c(1,1)*0.25 - geo.LiftingSurface.c(surfacenum,1)*0.75;
+%else
+ %   geo.LiftingSurface.le = geo.comprimento - geo.LiftingSurface.c(1,1)*0.25 - geo.LiftingSurface.c(surfacenum,1)*0.75;
+%end
 
 geo.LiftingSurface.pos(surfacenum,1) = geo.LiftingSurface.le;
 geo.LiftingSurface.pos(surfacenum,2) = 0;
-geo.LiftingSurface.pos(surfacenum,2) = geo.LiftingSurface.pos(surfacenum,2); %mudei para 2
+geo.LiftingSurface.pos(surfacenum,3) = geo.LiftingSurface.pos(surfacenum,3); %mudei para 2 % deixamos o 3, pois ele se refere a posicao no 3 eixo, que é o z, no caso, a altura
 %% ==================== Distribuicao das malhas ===========================
 geo.LiftingSurface.Mesh.Definido = [1;1;1];  % Define se utilizara as distribuicoes pre-definidas
 
@@ -175,12 +185,10 @@ densi_central = 0.81;
 densi_ponta   = 1.00;
 densi_EH      = 1.85;
 
-% Calculo das distribuicoes de malha 
+% Calculo das distribuicoes de malha
 geo.LiftingSurface.Mesh.Ny(1,1) = floor(geo.LiftingSurface.pest(1).*2.*sim.panel.*densi_central);
-geo.LiftingSurface.Mesh.Ny(2,1) = floor(geo.LiftingSurface.pest(2).*2.*sim.panel.*densi_central);
 geo.LiftingSurface.Mesh.Ny(1,2) = floor((2*sim.panel-geo.LiftingSurface.Mesh.Ny(1,1)).*densi_ponta);
-geo.LiftingSurface.Mesh.Ny(2,2) = floor((2*sim.panel-geo.LiftingSurface.Mesh.Ny(2,1)).*densi_ponta);
-geo.LiftingSurface.Mesh.Ny(3,1) = floor((geo.LiftingSurface.b(3,2)./geo.LiftingSurface.b(1,3)).*sim.panel.*densi_EH);
+geo.LiftingSurface.Mesh.Ny(2,1) = floor(((geo.LiftingSurface.b(2,2))^0.65).*sim.panel.*densi_EH);
 %% ==================== Definicao das dimensoes da ev =====================
 geo.ev.section_num = 1;
 
@@ -214,32 +222,32 @@ geo.ev.pos(1,3) = geo.LiftingSurface.pos(surfacenum,3)+geo.ev.posEH;        % [m
 
 %% ============== Definicao do posicionamento do CG e TP =================
 % CG
-% geo.cg.pos(1)   = (geo.cg.h-0.25)*geo.LiftingSurface.c(1,3);              % [m] posicao do CG em x com origem no CA da asa inferior
+geo.cg.pos(1)   = (geo.cg.h-0.25)*geo.LiftingSurface.c(1,3);              % [m] posicao do CG em x com origem no CA da asa inferior
+% geo.cg.pos(1)   = geo.cg.x;                                                  % [m] posicao do CG em x com origem no CA da asa inferior
 geo.cg.pos(2)   = 0;                                                        % [m] posicao do CG em y com origem no CA da asa inferior
 geo.cg.pos(3)   = geo.cg.v;                                                 % [m] posicao do CG em z com origem no CA da asa inferior
 
 % Moto-propulsor
 geo.mp.pos(1) = 0;                                                          % [m] Posicao do motor em x
 geo.mp.pos(2) = 0;                                                          % [m] Posicao do motor em y
-geo.mp.pos(3) = geo.mp.pos_gap;                                             % [m] Posicao do motor em z
+%geo.mp.pos(3) = geo.mp.pos_gap;
+% [m] Posicao do motor em z - nao tem gap
 
 % TREM DE POUSO
-%geo.tp.pos(1)   = geo.tp.tp_CG + geo.cg.pos(1);          					% [m] distancia do trem de pouso ao CA da asa inferior em x
+%pode descomentar esse
+geo.tp.pos(1)   = geo.tp.tp_CG + geo.cg.pos(1);          					% [m] distancia do trem de pouso ao CA da asa inferior em x
 geo.tp.pos(2)   = 0;                                                        % [m] distancia do trem de pouso ao CA da asa inferior em y
 geo.tp.pos(3)   = -geo.LiftingSurface.h(1,1);                               % [m] distancia do trem de pouso ao CA da asa inferior em z
 
 %% ======================= Penalizacoes geometricas =======================
+
 % disp(geo.LiftingSurface.B(1,1)+ abs(geo.LiftingSurface.Stagger) + (geo.LiftingSurface.c(1,1)*0.25) + geo.LiftingSurface.le + (geo.LiftingSurface.c(3,1)*0.75))
-if -geo.LiftingSurface.Stagger+geo.LiftingSurface.c(1,1)> geo.comprimento || geo.LiftingSurface.c(1,1)>geo.comprimento
-	penal = 1;
-	disp('Corda da asa inferior maior que o limite de comprimento');
-elseif geo.LiftingSurface.Stagger+geo.LiftingSurface.c(2,1)> geo.comprimento || geo.LiftingSurface.c(2,1)>geo.comprimento
-	penal = 1;
-%tirei a condicao da asa superior(tentando deixar monoplano em todo o codigo)
-    disp('Corda da ponta menor que 15 cm (asa inferiror)');
-elseif geo.LiftingSurface.c(2,3)<=0.15
-	penal = 1;
+%nao precisa dessa restricao pois n tem limite de comprimento
 
-end
+%% 
+penal = 0;
 
+if ~prod(~geo.LiftingSurface.c(geo.LiftingSurface.c ~= 0) < 0.16)           % Penalizacao caso corda menor que 16 cm
+    penal = 1;
+    fprintf('Penalizada geometricamente por corda menor que limite.\n')
 end

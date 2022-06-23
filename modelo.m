@@ -37,14 +37,10 @@ sim.ajuste   = 0;   % [-] Uso de curvas polinomiais ou interpoladas
 
 % 15 [ ] Envergadura da empenagem horizontal (x2l_v3_2_1)
 
-aeronave.asa1    = [2.41 x(1) 0.7 x(4) 1 2 3 1];
-% ['Envergadura' 'Alongamento' 'Estacao central' 'Afilamento da ponta' 'Perfil1' 'Perfil2' 'Perfil3' 'Incidencia] 
-aeronave.asa2    = [2.41 x(2) x(3) x(5) 4 5 6 1 -0.1 1];
-% ['Envergadura' 'Alongamento' 'Estacao central' 'Afilamento da ponta' 'Perfil1'' Perfil2' 'Perfil3' 'Incidencia' 'Stagger' 'Gap']
-aeronave.incid = [x(7) x(8) x(9) x(12) x(13) x(14)];
-% Respectivas incidencias
-aeronave.eh      = [x(15) 0.18 7 -5 0.5 1.365];
-% ['Envergadura' 'Corda' 'Perfil' 'Incidencia' 'Efetividade' 'Altura[metros]'];
+aeronave.asa1    = [2.41 x(1) 0.7 x(4) 1 2 3 1 1 1 1];
+% ['Envergadura' 'Alongamento' 'Estacao central' 'Afilamento da ponta' 'Perfil1' 'Perfil2' 'Perfil3' 'Incidencia da Asa' 'tor�ao1' 'tor�ao2' 'torcao 3'] 
+aeronave.eh      = [x(15) 0.18 7 -5 0.5 1.365 1 1];
+% ['Envergadura' 'Corda' 'Perfil' 'Incidencia' 'Efetividade' 'Altura[metros]' 'torcao1' 'torcao2'];
 aeronave.ev      = [0.23 0.00 10];
 % ['Envergadura da ev' 'Posicao do centro em relacao ao CA da EH' 'Perfil EV'];
 aeronave.outros  = [0.23 0.45 3 0.45];
@@ -56,29 +52,21 @@ aeronave.outros  = [0.23 0.45 3 0.45];
 % FLIGTH CONDITIONS
 [flc] = condicoesVOO();
 
-% DEFININDO NOVOS PERFIS
-base = {'MH81' 'WTU_01' 'MH84'};
-cambra = [x(6) x(10) x(11) ];
-espessura = [2 1 2];
-cambra = floor(cambra);
-espessura = floor(espessura);
-direciona_perfil(base,cambra,espessura) 
-
 % PLOTAR
 % VLManda(geo,flc,sim,2,'-LiftingSurfaces');% So colar na command Window
 
-%% -------------------- ESTABILIDADE E CONTROLE ---------------------------
+%% ------------------------- AERODINAMICA ---------------------------------
+% Calculo do estol
 if ~penal
-%    Calculo do angulo de estol da aeronave
-%     if sim.paralelo
-%         [ard]               = estolp(geo, flc, sim);
-%     else
-%         [ard]               = estol(geo, flc, sim);
-%     end
-     ard.alpha_estol = 17;
-    
-    % Avaliacao dos criterios de estabilidade (Margem Estï¿½tica, trimagem e rotaï¿½ï¿½o)
-    [penal,std]         = estabilidade(geo,flc,sim,ard);
+    if sim.paralelo 
+        [ard,geo]               = estolp(geo, flc, sim);
+
+    else 
+        [ard,geo]               = estol(geo, flc, sim);
+    end
+    ard.def = ard.estoleh + x(5);
+% save('ard','ard','geo')
+% load('ard')
 end
 
 %% -------------------------- PONTUACAO -----------------------------------
@@ -94,18 +82,17 @@ if penal
 
 else
 	% Calculo do MTOW da aeronave pelo modulo de dsp
-	[mtow]   		= corrida(geo, flc, sim, ard, std);
+ [mtow]   		= corrida(geo, flc, sim, ard, std);
 
 % 	% Calculo do PV da aeronave pelo estima massa
-% 	[pv,~] 			= EstimaMassa(geo, mtow);
-% 	fclose('all');
-    pv = 3.5;
-	
+	[pv,~] 			= EstimaMassa(geo, mtow);
+	fclose('all');
+
 	% Calculo da carga paga maxima da aeronave
 	cp = mtow - pv;
  end
 
-[Pontuacao] 		= pontuacao(cp, pv, 154, 45);
+[Pontuacao] 		= pontuacao(cp, pv);
 result              = -Pontuacao;
 tempo = toc;
 
