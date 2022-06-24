@@ -71,13 +71,13 @@ end
 
 %% -------------------------- PONTUACAO -----------------------------------
 if penal
-	% Estimativa de mtow para aeronaves penalizadas
+	% Estimativa de mtow(peso total/tudo) para aeronaves penalizadas
 	mtow   			= 7;
 
-	% Estimativa de PV para aeronaves penalizadas
+	% Estimativa de PV(peso vazio/sem carga) para aeronaves penalizadas
 	pv 				= 3.5;
 
-	% Calculo da carga paga maxima da aeronave
+	% Calculo da carga paga(peso total - vazio) maxima da aeronave
 	cp 				= mtow - pv;
 
 else
