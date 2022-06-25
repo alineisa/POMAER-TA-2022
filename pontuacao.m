@@ -3,8 +3,10 @@ function [PT] = pontuacao(CP, PV)
 %mtow(peso total/tudo)
 % PV(peso vazio/sem carga)
 %carga paga(peso total - vazio)
-%EE - quantidade de peso que a aeronave consegue levar
 
+
+%EE - quantidade de peso que a aeronave consegue levar (aline: isso é carga
+%paga, eficiencia estrutural é CP/PV)
 
 mtow = CP+PV;
 
@@ -20,7 +22,7 @@ EE = CP/PV;
 Pvoo = 15*EE+CP;
 
 %PONTUAÇÃO DE PROJETO
-PP = 8.5;
+PP = 8.5; %(aline: elas valem 10, pode considerar como 10 se quiser, mas se quiser deixar uma margem, tudo bem tambem)
 
 %BONIFICAÇÃO
 BT = 5;
@@ -30,3 +32,5 @@ BT = 5;
 PT = Pvoo + PP + BT;
 
 end
+
+%ALINE: ficou muito bom!! parabéns!

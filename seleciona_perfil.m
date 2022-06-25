@@ -3,24 +3,24 @@
 function [perfil] = seleciona_perfil(choice_perf)
 % Primeira selecao com MHs
     if choice_perf == 0
-        perfil = 'WTU_01.mat';  
+        perfil = 'BA7_top10.mat';  
     elseif choice_perf == 1
-       	perfil = 'P1.mat';
+       	perfil = 'MH78.mat';
 	elseif choice_perf == 2
-        perfil = 'P1.mat';
+        perfil = 'MH80.mat';
 	elseif choice_perf == 3
-        perfil = 'MH78_4_1.mat';
+        perfil = 'MH81.mat';
     elseif choice_perf == 4
-        perfil = 'P2.mat';
+        perfil = 'MH82.mat';
     elseif choice_perf == 5
-        perfil = 'P2.mat';
-    elseif choice_perf ==6
-        perfil = 'P3.mat';
-    elseif choice_perf == 7
-        perfil = 'x2l_v3_2_1.mat';
-    elseif choice_perf == 8
         perfil = 'MH84.mat';
-
+    elseif choice_perf ==6
+        perfil = 'NACA-3412.mat';
+    elseif choice_perf == 7
+        perfil = 's1223.mat';
+    elseif choice_perf == 8
+        perfil = '';
+%colocar na pasta posteriormente os perfis que faltam (mh84)
 % Segunda selecao com hipersustentadores 
 
 %     if choice_perf == 0
