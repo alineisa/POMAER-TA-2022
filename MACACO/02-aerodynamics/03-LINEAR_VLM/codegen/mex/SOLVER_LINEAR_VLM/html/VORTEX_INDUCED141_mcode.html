@@ -1,0 +1,108 @@
+<!-- saved from url=(0014)about:internet -->
+<html>
+<body>
+<script src="resources/eml_report_loadable_data.js"></script>
+<pre class="code">
+<span class="srcline"><span class="lineno"><a href="59,1" id="srcline1">  1</a></span><span class="line"><span class="keyword">function</span> [<span class="var type1" id="S2T10U3">Vind</span>] = VORTEX_INDUCED(<span class="var type1" id="S3T10U6">P</span>,<span class="var type1" id="S4T12U7">Vortex</span>,<span class="var type2" id="S5T3V1U8">G</span>,<span class="var type2" id="S6T3V1U9">tipo</span>)</span></span>
+<span class="srcline"><span class="lineno"><a href="59,2" id="srcline2">  2</a></span><span class="line"><span class="comment"><span class="comment">%{</span></span></span></span>
+<span class="srcline"><span class="lineno"><a href="59,3" id="srcline3">  3</a></span><span class="line"></span></span>
+<span class="srcline"><span class="lineno"><a href="59,4" id="srcline4">  4</a></span><span class="line"><span class="comment">Função responsável por calcular a velocidade em um ponto P devido a um</span></span></span>
+<span class="srcline"><span class="lineno"><a href="59,5" id="srcline5">  5</a></span><span class="line"><span class="comment">Vortice de intensidade G.</span></span></span>
+<span class="srcline"><span class="lineno"><a href="59,6" id="srcline6">  6</a></span><span class="line"></span></span>
+<span class="srcline"><span class="lineno"><a href="59,7" id="srcline7">  7</a></span><span class="line"><span class="comment">Vortex(	1:k				,	1:3		)</span></span></span>
+<span class="srcline"><span class="lineno"><a href="59,8" id="srcline8">  8</a></span><span class="line"><span class="comment">		k-ésimo vértice		coordenadas</span></span></span>
+<span class="srcline"><span class="lineno"><a href="59,9" id="srcline9">  9</a></span><span class="line"><span class="comment">		do vortice			x,y,z</span></span></span>
+<span class="srcline"><span class="lineno"><a href="59,10" id="srcline10"> 10</a></span><span class="line"></span></span>
+<span class="srcline"><span class="lineno"><a href="59,11" id="srcline11"> 11</a></span><span class="line"></span></span>
+<span class="srcline"><span class="lineno"><a href="59,12" id="srcline12"> 12</a></span><span class="line"></span></span>
+<span class="srcline"><span class="lineno"><a href="59,13" id="srcline13"> 13</a></span><span class="line"><span class="comment">Exemplo de vórtice linear (tipo = 0)</span></span></span>
+<span class="srcline"><span class="lineno"><a href="59,14" id="srcline14"> 14</a></span><span class="line"></span></span>
+<span class="srcline"><span class="lineno"><a href="59,15" id="srcline15"> 15</a></span><span class="line"><span class="comment">-OO</span></span></span>
+<span class="srcline"><span class="lineno"><a href="59,16" id="srcline16"> 16</a></span><span class="line"></span></span>
+<span class="srcline"><span class="lineno"><a href="59,17" id="srcline17"> 17</a></span><span class="line"><span class="comment">k=2	o</span></span></span>
+<span class="srcline"><span class="lineno"><a href="59,18" id="srcline18"> 18</a></span><span class="line"><span class="comment">	^</span></span></span>
+<span class="srcline"><span class="lineno"><a href="59,19" id="srcline19"> 19</a></span><span class="line"><span class="comment">	^</span></span></span>
+<span class="srcline"><span class="lineno"><a href="59,20" id="srcline20"> 20</a></span><span class="line"><span class="comment">	^</span></span></span>
+<span class="srcline"><span class="lineno"><a href="59,21" id="srcline21"> 21</a></span><span class="line"><span class="comment">	^	P	</span></span></span>
+<span class="srcline"><span class="lineno"><a href="59,22" id="srcline22"> 22</a></span><span class="line"><span class="comment">	^	*	</span></span></span>
+<span class="srcline"><span class="lineno"><a href="59,23" id="srcline23"> 23</a></span><span class="line"><span class="comment">k=1	o	</span></span></span>
+<span class="srcline"><span class="lineno"><a href="59,24" id="srcline24"> 24</a></span><span class="line"><span class="comment">	</span></span></span>
+<span class="srcline"><span class="lineno"><a href="59,25" id="srcline25"> 25</a></span><span class="line"><span class="comment">+OO         </span></span></span>
+<span class="srcline"><span class="lineno"><a href="59,26" id="srcline26"> 26</a></span><span class="line"></span></span>
+<span class="srcline"><span class="lineno"><a href="59,27" id="srcline27"> 27</a></span><span class="line"></span></span>
+<span class="srcline"><span class="lineno"><a href="59,28" id="srcline28"> 28</a></span><span class="line"><span class="comment">Exemplo de vórtice ferradura (tipo = 1)</span></span></span>
+<span class="srcline"><span class="lineno"><a href="59,29" id="srcline29"> 29</a></span><span class="line"></span></span>
+<span class="srcline"><span class="lineno"><a href="59,30" id="srcline30"> 30</a></span><span class="line"><span class="comment">k=3	o &gt; &gt; &gt; o k=4</span></span></span>
+<span class="srcline"><span class="lineno"><a href="59,31" id="srcline31"> 31</a></span><span class="line"><span class="comment">	^		v</span></span></span>
+<span class="srcline"><span class="lineno"><a href="59,32" id="srcline32"> 32</a></span><span class="line"><span class="comment">	^		v</span></span></span>
+<span class="srcline"><span class="lineno"><a href="59,33" id="srcline33"> 33</a></span><span class="line"><span class="comment">	^		v</span></span></span>
+<span class="srcline"><span class="lineno"><a href="59,34" id="srcline34"> 34</a></span><span class="line"><span class="comment">	^	P	v</span></span></span>
+<span class="srcline"><span class="lineno"><a href="59,35" id="srcline35"> 35</a></span><span class="line"><span class="comment">	^	*	v</span></span></span>
+<span class="srcline"><span class="lineno"><a href="59,36" id="srcline36"> 36</a></span><span class="line"><span class="comment">k=2	o		o k=5</span></span></span>
+<span class="srcline"><span class="lineno"><a href="59,37" id="srcline37"> 37</a></span><span class="line"><span class="comment">    ^		v</span></span></span>
+<span class="srcline"><span class="lineno"><a href="59,38" id="srcline38"> 38</a></span><span class="line"><span class="comment">    ^		v</span></span></span>
+<span class="srcline"><span class="lineno"><a href="59,39" id="srcline39"> 39</a></span><span class="line"><span class="comment">    ^		v</span></span></span>
+<span class="srcline"><span class="lineno"><a href="59,40" id="srcline40"> 40</a></span><span class="line"><span class="comment">    ^		v</span></span></span>
+<span class="srcline"><span class="lineno"><a href="59,41" id="srcline41"> 41</a></span><span class="line"><span class="comment">k=1	o       o k=6</span></span></span>
+<span class="srcline"><span class="lineno"><a href="59,42" id="srcline42"> 42</a></span><span class="line"></span></span>
+<span class="srcline"><span class="lineno"><a href="59,43" id="srcline43"> 43</a></span><span class="line"><span class="comment">+OO          +OO</span></span></span>
+<span class="srcline"><span class="lineno"><a href="59,44" id="srcline44"> 44</a></span><span class="line"></span></span>
+<span class="srcline"><span class="lineno"><a href="59,45" id="srcline45"> 45</a></span><span class="line"></span></span>
+<span class="srcline"><span class="lineno"><a href="59,46" id="srcline46"> 46</a></span><span class="line"></span></span>
+<span class="srcline"><span class="lineno"><a href="59,47" id="srcline47"> 47</a></span><span class="line"><span class="comment">Exemplo de vórtice anel (tipo = 2)</span></span></span>
+<span class="srcline"><span class="lineno"><a href="59,48" id="srcline48"> 48</a></span><span class="line"></span></span>
+<span class="srcline"><span class="lineno"><a href="59,49" id="srcline49"> 49</a></span><span class="line"><span class="comment">k=2	o &gt; &gt; &gt; o k=3</span></span></span>
+<span class="srcline"><span class="lineno"><a href="59,50" id="srcline50"> 50</a></span><span class="line"><span class="comment">	^		v</span></span></span>
+<span class="srcline"><span class="lineno"><a href="59,51" id="srcline51"> 51</a></span><span class="line"><span class="comment">	^		v</span></span></span>
+<span class="srcline"><span class="lineno"><a href="59,52" id="srcline52"> 52</a></span><span class="line"><span class="comment">	^	P	v</span></span></span>
+<span class="srcline"><span class="lineno"><a href="59,53" id="srcline53"> 53</a></span><span class="line"><span class="comment">	^	*	v</span></span></span>
+<span class="srcline"><span class="lineno"><a href="59,54" id="srcline54"> 54</a></span><span class="line"><span class="comment">	^		v</span></span></span>
+<span class="srcline"><span class="lineno"><a href="59,55" id="srcline55"> 55</a></span><span class="line"><span class="comment">k=1	o &lt; &lt; &lt; o k=4</span></span></span>
+<span class="srcline"><span class="lineno"><a href="59,56" id="srcline56"> 56</a></span><span class="line"><span class="comment">        </span></span></span>
+<span class="srcline"><span class="lineno"><a href="59,57" id="srcline57"> 57</a></span><span class="line"><span class="comment"><span class="comment">%}</span></span></span></span>
+<span class="srcline"><span class="lineno"><a href="59,58" id="srcline58"> 58</a></span><span class="line"></span></span>
+<span class="srcline"><span class="lineno"><a href="59,59" id="srcline59"> 59</a></span><span class="line"><span class="mxinfo " id="T3:U6"><span class="var type1" id="S7T3U12">K</span> = <span class="mxinfo " id="T3:U8">length(<span class="mxinfo " id="T41:U9"><span class="var type1" id="S4T12U16">Vortex</span>(<span class="mxinfo " id="T11:U11">1</span>,<span class="mxinfo " id="T13:U12">:</span>,<span class="mxinfo " id="T11:U13">1</span>)</span>)</span></span>;</span></span>
+<span class="srcline"><span class="lineno"><a href="59,60" id="srcline60"> 60</a></span><span class="line"><span class="mxinfo " id="T39:U14"><span class="var type1" id="S9T39U22">Vind_k</span> = <span class="mxinfo " id="T39:U16">zeros(<span class="var type1" id="S7T3U25">K</span>,<span class="mxinfo " id="T3:U18">3</span>)</span></span>;</span></span>
+<span class="srcline"><span class="lineno"><a href="59,61" id="srcline61"> 61</a></span><span class="line"><span class="keyword">switch</span> <span class="var type1" id="S6T3U28">tipo</span></span></span>
+<span class="srcline"><span class="lineno"><a href="59,62" id="srcline62"> 62</a></span><span class="line">	</span></span>
+<span class="srcline"><span class="lineno"><a href="59,63" id="srcline63"> 63</a></span><span class="line">	<span class="keyword">case</span> 1</span></span>
+<span class="srcline"><span class="lineno"><a href="59,64" id="srcline64"> 64</a></span><span class="line">		<span class="mxinfo " id="T10:U20"><span class="var type1" id="S11T10U33">V1</span> = <span class="mxinfo " id="T10:U22">zeros(<span class="mxinfo " id="T3:U23">1</span>,<span class="mxinfo " id="T3:U24">3</span>)</span></span>;</span></span>
+<span class="srcline"><span class="lineno"><a href="59,65" id="srcline65"> 65</a></span><span class="line">		<span class="mxinfo " id="T10:U25"><span class="var type1" id="S12T10U40">V2</span> = <span class="mxinfo " id="T10:U27">zeros(<span class="mxinfo " id="T3:U28">1</span>,<span class="mxinfo " id="T3:U29">3</span>)</span></span>;</span></span>
+<span class="srcline"><span class="lineno"><a href="59,66" id="srcline66"> 66</a></span><span class="line">		</span></span>
+<span class="srcline"><span class="lineno"><a href="59,67" id="srcline67"> 67</a></span><span class="line"><span class="comment">% 		Vind_k = zeros(K,3);</span></span></span>
+<span class="srcline"><span class="lineno"><a href="59,68" id="srcline68"> 68</a></span><span class="line">		</span></span>
+<span class="srcline"><span class="lineno"><a href="59,69" id="srcline69"> 69</a></span><span class="line">		<span class="comment">% Cálculo da velocidade induzida por cada segmento do vórtice</span></span></span>
+<span class="srcline"><span class="lineno"><a href="59,70" id="srcline70"> 70</a></span><span class="line">		<span class="keyword">for</span> <span class="var type1" id="S13T3U47">k</span>=<span class="mxinfo " id="T3:U31">1</span>:<span class="mxinfo " id="T3:U32"><span class="var type1" id="S7T3U51">K</span>-<span class="mxinfo " id="T3:U34">1</span></span></span></span>
+<span class="srcline"><span class="lineno"><a href="59,71" id="srcline71"> 71</a></span><span class="line">			</span></span>
+<span class="srcline"><span class="lineno"><a href="59,72" id="srcline72"> 72</a></span><span class="line">			<span class="mxinfo " id="T10:U35"><span class="var type1" id="S11T10U56">V1</span>(:) = <span class="mxinfo " id="T8:U37"><span class="var type1" id="S4T12U59">Vortex</span>(<span class="mxinfo " id="T3:U39">1</span>,<span class="var type1" id="S13T3U61">k</span>  ,<span class="mxinfo " id="T9:U41">:</span>)</span></span>;	</span></span>
+<span class="srcline"><span class="lineno"><a href="59,73" id="srcline73"> 73</a></span><span class="line">			<span class="mxinfo " id="T10:U42"><span class="var type1" id="S12T10U66">V2</span>(:) = <span class="mxinfo " id="T8:U44"><span class="var type1" id="S4T12U69">Vortex</span>(<span class="mxinfo " id="T3:U46">1</span>,<span class="mxinfo " id="T3:U47"><span class="var type1" id="S13T3U72">k</span>+<span class="mxinfo " id="T3:U49">1</span></span>,<span class="mxinfo " id="T9:U50">:</span>)</span></span>;</span></span>
+<span class="srcline"><span class="lineno"><a href="59,74" id="srcline74"> 74</a></span><span class="line"></span></span>
+<span class="srcline"><span class="lineno"><a href="59,75" id="srcline75"> 75</a></span><span class="line">			<span class="mxinfo " id="T10:U51"><span class="var type1" id="S14T10U77">r0</span> = <span class="mxinfo " id="T10:U53"><span class="var type1" id="S12T10U79">V2</span>-<span class="var type1" id="S11T10U80">V1</span></span></span>;</span></span>
+<span class="srcline"><span class="lineno"><a href="59,76" id="srcline76"> 76</a></span><span class="line">			<span class="mxinfo " id="T10:U56"><span class="var type1" id="S15T10U83">r1</span> = <span class="mxinfo " id="T10:U58"><span class="var type1" id="S3T10U85">P</span>-<span class="var type1" id="S11T10U86">V1</span></span></span>;</span></span>
+<span class="srcline"><span class="lineno"><a href="59,77" id="srcline77"> 77</a></span><span class="line">			<span class="mxinfo " id="T10:U61"><span class="var type1" id="S16T10U89">r2</span> = <span class="mxinfo " id="T10:U63"><span class="var type1" id="S3T10U91">P</span>-<span class="var type1" id="S12T10U92">V2</span></span></span>;</span></span>
+<span class="srcline"><span class="lineno"><a href="59,78" id="srcline78"> 78</a></span><span class="line">						</span></span>
+<span class="srcline"><span class="lineno"><a href="59,79" id="srcline79"> 79</a></span><span class="line">			<span class="mxinfo " id="T3:U66"><span class="var type1" id="S17T3U95">r0_s</span> = <span class="mxinfo " id="T3:U68">norm(<span class="var type1" id="S14T10U98">r0</span>)</span></span>;</span></span>
+<span class="srcline"><span class="lineno"><a href="59,80" id="srcline80"> 80</a></span><span class="line">			<span class="mxinfo " id="T3:U70"><span class="var type1" id="S19T3U101">r1_s</span> = <span class="mxinfo " id="T3:U72">norm(<span class="var type1" id="S15T10U104">r1</span>)</span></span>;</span></span>
+<span class="srcline"><span class="lineno"><a href="59,81" id="srcline81"> 81</a></span><span class="line">			<span class="mxinfo " id="T3:U74"><span class="var type1" id="S20T3U107">r2_s</span> = <span class="mxinfo " id="T3:U76">norm(<span class="var type1" id="S16T10U110">r2</span>)</span></span>;</span></span>
+<span class="srcline"><span class="lineno"><a href="59,82" id="srcline82"> 82</a></span><span class="line">			</span></span>
+<span class="srcline"><span class="lineno"><a href="59,83" id="srcline83"> 83</a></span><span class="line">			<span class="comment">% Diâmetro do núcleo do vórtice</span></span></span>
+<span class="srcline"><span class="lineno"><a href="59,84" id="srcline84"> 84</a></span><span class="line">			<span class="mxinfo " id="T3:U78"><span class="var type1" id="S21T3U113">D</span> = <span class="mxinfo " id="T3:U80">1e-9</span></span>;</span></span>
+<span class="srcline"><span class="lineno"><a href="59,85" id="srcline85"> 85</a></span><span class="line">			<span class="keyword">if</span> <span class="mxinfo " id="T17:U81">any(<span class="mxinfo " id="T27:U82"><span class="mxinfo " id="T10:U83">abs(<span class="mxinfo " id="T10:U84">[<span class="var type1" id="S17T3U124">r0_s</span>, <span class="var type1" id="S19T3U125">r1_s</span>, <span class="var type1" id="S20T3U126">r2_s</span>]</span>)</span>&lt;=<span class="var type1" id="S21T3U127">D</span></span>)</span></span></span>
+<span class="srcline"><span class="lineno"><a href="59,86" id="srcline86"> 86</a></span><span class="line">				<span class="mxinfo " id="T10:U89"><span class="mxinfo " id="T10:U90"><span class="var type1" id="S9T39U131">Vind_k</span>(<span class="var type1" id="S13T3U132">k</span>,<span class="mxinfo " id="T9:U93">:</span>)</span> = <span class="mxinfo " id="T3:U94">0</span></span>;</span></span>
+<span class="srcline"><span class="lineno"><a href="59,87" id="srcline87"> 87</a></span><span class="line">			<span class="keyword">else</span>	</span></span>
+<span class="srcline"><span class="lineno"><a href="59,88" id="srcline88"> 88</a></span><span class="line">				<span class="mxinfo " id="T10:U95"><span class="var type1" id="S24T10U138">r1xr2</span>   = <span class="mxinfo " id="T10:U97">cross(<span class="var type1" id="S15T10U141">r1</span>,<span class="var type1" id="S16T10U142">r2</span>)</span></span>;</span></span>
+<span class="srcline"><span class="lineno"><a href="59,89" id="srcline89"> 89</a></span><span class="line">				<span class="mxinfo " id="T3:U100"><span class="var type1" id="S26T3U145">r1xr2_s</span> = <span class="mxinfo " id="T3:U102">norm(<span class="var type1" id="S24T10U148">r1xr2</span>)</span></span>;</span></span>
+<span class="srcline"><span class="lineno"><a href="59,90" id="srcline90"> 90</a></span><span class="line"></span></span>
+<span class="srcline"><span class="lineno"><a href="59,91" id="srcline91"> 91</a></span><span class="line">				<span class="mxinfo " id="T10:U104"><span class="mxinfo " id="T10:U105"><span class="var type1" id="S9T39U152">Vind_k</span>(<span class="var type1" id="S13T3U153">k</span>,<span class="mxinfo " id="T9:U108">:</span>)</span> = <span class="mxinfo " id="T10:U109"><span class="mxinfo " id="T10:U110"><span class="mxinfo " id="T10:U111"><span class="mxinfo " id="T3:U112"><span class="var type1" id="S5T3U159">G</span>/(4*pi)</span> * (<span class="var type1" id="S24T10U166">r1xr2</span>)</span>/(<span class="mxinfo " id="T3:U115"><span class="var type1" id="S26T3U169">r1xr2_s</span>^2</span>)</span> *  <span class="mxinfo " id="T3:U117">dot(<span class="var type1" id="S14T10U173">r0</span>, (<span class="mxinfo " id="T10:U119"><span class="mxinfo " id="T10:U120"><span class="var type1" id="S15T10U177">r1</span>/<span class="var type1" id="S19T3U178">r1_s</span></span> - <span class="mxinfo " id="T10:U123"><span class="var type1" id="S16T10U180">r2</span>/<span class="var type1" id="S20T3U181">r2_s</span></span></span>))</span></span></span>;</span></span>
+<span class="srcline"><span class="lineno"><a href="59,92" id="srcline92"> 92</a></span><span class="line">			<span class="keyword">end</span></span></span>
+<span class="srcline"><span class="lineno"><a href="59,93" id="srcline93"> 93</a></span><span class="line">		<span class="keyword">end</span></span></span>
+<span class="srcline"><span class="lineno"><a href="59,94" id="srcline94"> 94</a></span><span class="line">		</span></span>
+<span class="srcline"><span class="lineno"><a href="59,95" id="srcline95"> 95</a></span><span class="line">		</span></span>
+<span class="srcline"><span class="lineno"><a href="59,96" id="srcline96"> 96</a></span><span class="line">		</span></span>
+<span class="srcline"><span class="lineno"><a href="59,97" id="srcline97"> 97</a></span><span class="line"><span class="keyword">end</span></span></span>
+<span class="srcline"><span class="lineno"><a href="59,98" id="srcline98"> 98</a></span><span class="line"></span></span>
+<span class="srcline"><span class="lineno"><a href="59,99" id="srcline99"> 99</a></span><span class="line"><span class="comment">% Soma das velocidades induzidas por cada segmento</span></span></span>
+<span class="srcline"><span class="lineno"><a href="59,100" id="srcline100">100</a></span><span class="line"><span class="mxinfo " id="T10:U126"><span class="var type1" id="S2T10U184">Vind</span> = <span class="mxinfo " id="T10:U128">sum(<span class="var type1" id="S9T39U187">Vind_k</span>)</span></span>;</span></span>
+</pre>
+</body>
+</html>

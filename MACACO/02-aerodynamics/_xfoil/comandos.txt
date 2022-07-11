@@ -1,0 +1,37 @@
+y
+Load C:\Users\andre\Desktop\Ch\S9026_HT.dat
+S9026
+gdes
+flap
+0.6
+ 999 
+1
+20
+x
+gset
+
+save ..\S9026_HT_deflex_baixo\S9026 - xh0.6-yh1-df20.dat
+y
+oper
+iter 200
+visc
+001000000
+mach
+0.00
+hinc
+cinc
+pacc
+..\S9026_HT_deflex_baixo\S9026-Re001000000.dat
+
+alfa -2.00
+alfa 0.00
+alfa 2.00
+alfa 4.00
+alfa 6.00
+alfa 8.00
+alfa 10.00
+alfa 12.00
+alfa 13.00
+alfa 14.00
+alfa 15.00
+alfa 13.64

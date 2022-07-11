@@ -1,0 +1,19 @@
+LIBRARY SOLVER_LINEAR_VLM_mex.mexw64
+EXPORTS
+mexFunction
+mexfilerequiredapiversion
+emlrtMexFcnProperties
+SOLVER_LINEAR_VLM
+emxEnsureCapacity
+emxFree_int32_T
+emxFree_ptrdiff_t
+emxFree_real_T
+emxInit_int32_T
+emxInit_int32_T1
+emxInit_ptrdiff_t
+emxInit_real_T
+emxInit_real_T1
+emxInit_real_T2
+SOLVER_LINEAR_VLM_initialize
+SOLVER_LINEAR_VLM_terminate
+SOLVER_LINEAR_VLM_atexit
