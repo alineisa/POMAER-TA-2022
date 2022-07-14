@@ -5,12 +5,12 @@ function [result] = modelo(x,~,individuo)
 
 % PARAMETROS DA SIMULACAO
 tic;                % inicio da contagem de tempo
-sim.paralelo  = 0;  % Indica se usa ou n??o processamento paralelo
+sim.paralelo  = 1;  % Indica se usa ou n??o processamento paralelo
                     % OBS: Caso rodar paralelo, pre-definir o numero de
                     % processadores pelo comando parpool(n)
                     % Ex: 3 processadores - parpool(3)
                     
-sim.panel    = 15;  % [-] Numero parametrizado de paineis VLM
+sim.panel    = 14;  % [-] Numero parametrizado de paineis VLM
 sim.intermax = 25;  % [-] Numero de iteracoes maxima no VLM
                     
 sim.dist     = 0;   % [-] Comando para retirar alpha efetivo do VLM (usado apenas para o estol...)
@@ -29,10 +29,10 @@ sim.ajuste   = 0;   % [-] Uso de curvas polinomiais ou interpoladas
 %             0.50    1.50          % 07 [m] le
 % 			];  
 
-aeronave.asa1    = [1.99 x(1) x(2) x(3) floor(x(4)) floor(x(4)) floor(x(4)) x(5)];
+aeronave.asa1    = [1.99  x(2) x(3) floor(x(4)) floor(x(4)) floor(x(4)) x(5)];
 % ['Envergadura' 'Alongamento' 'Estacao central' 'Afilamento da ponta' 'Perfil1' 'Perfil2' 'Perfil3' 'Incidencia da Asa' ] 
-aeronave.eh      = [x(6) 0.18 0 0 0.5 0.5 x(7)];
-% ['Envergadura' 'Corda' 'Perfil' 'Incidencia' 'Efetividade' 'Altura[metros]' 'le'];
+aeronave.eh      = [x(15) 0.18 7 -5 0.5 1.365 1 1];
+% ['Envergadura' 'Corda' 'Perfil' 'Incidencia' 'Efetividade' 'Altura[metros]' 'torcao1' 'torcao2'];
 aeronave.ev      = [0.23 0.00 10];
 % ['Envergadura da ev' 'Posicao do centro em relacao ao CA da EH' 'Perfil EV'];
 aeronave.outros  = [0.23 0.45 3 0.45];
@@ -45,7 +45,7 @@ aeronave.outros  = [0.23 0.45 3 0.45];
 [flc] = condicoesVOO();
 
 % PLOTAR
-VLManda(geo,flc,sim,2,'-LiftingSurfaces');% So colar na command Window
+% VLManda(geo,flc,sim,2,'-LiftingSurfaces');% So colar na command Window
 
 %% ------------------------- AERODINAMICA ---------------------------------
 % Calculo do estol

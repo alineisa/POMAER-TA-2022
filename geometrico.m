@@ -1,7 +1,7 @@
 function [geo,penal] = geometrico(aeronave,sim)
 %% ================================ Observacoes ================================
 % Modelo Geometrico do POMAER Tucano Regular 2021
-% Autores: Filipe Fran√É¬ßa & Lucas Honorio
+% Autores: Filipe Fran????a & Lucas Honorio
 
 % Eixos de referencia:
 % A origem fica no CA da asa.
@@ -21,14 +21,14 @@ surfacenum     	= 2;                                                        % [-
 geo.LiftingSurface.surfacenum = surfacenum;
 
 %   ASA
-geo.LiftingSurface.h(1,1) = .135;                                        	% [m] Altura do CA da raiz da asa inferior ao solo(n„o alterei pois n„o pretendo colocar enflechamento e diedro no projeto) 
+geo.LiftingSurface.h(1,1) = .135;                                        	% [m] Altura do CA da raiz da asa inferior ao solo(n?o alterei pois n?o pretendo colocar enflechamento e diedro no projeto) 
 geo.LiftingSurface.e(1:2,1:3) = 0;                                          % [deg] Enflechamento de cada secao das asas 
 geo.LiftingSurface.d(1:2,1:3) = 0;                                          % [deg] Diedro de cada secao das asas
 
 %   EMPENAGEM HORIZONTAL
 geo.LiftingSurface.e(surfacenum,1)          = 0;                            % [deg] Enflechamento da empenagem horizontal
 geo.LiftingSurface.d(surfacenum,1)          = 0;                            % [deg] Diedro da empenagem horizontal
-geo.LiftingSurface.wo(1:2,1:4)              = 0;                            % [deg] vetor de angulo de washout dos perfis das asas
+geo.LiftingSurface.wo(1:2,1:3)              = 0;                            % [deg] vetor de angulo de washout dos perfis das asas
 
 %   EMPENAGEM VERTICAL
 geo.ev.e(1)          = 0;                                                   % [deg] Enflechamento da empenagem horizontal
@@ -51,7 +51,7 @@ geo.LiftingSurface.B(1,1)  	    = aeronave.asa1(1);                         % [m
 geo.LiftingSurface.AR(1,1) 		= aeronave.asa1(2);						    % [-] Alongamento da asa inferior
 
 
-geo.LiftingSurface.pest(1,1)    = aeronave.asa1(3);						    % [-] Tamanho percentual da esta√ß√£o central da asa inferior
+geo.LiftingSurface.pest(1,1)    = aeronave.asa1(3);						    % [-] Tamanho percentual da esta????o central da asa inferior
 
 
 geo.LiftingSurface.lamb(1,1) 	= 1;                                        % [-] Afilamento da primeira secao asa 
@@ -64,29 +64,31 @@ geo.LiftingSurface.perfil(1,2)	= aeronave.asa1(6);                         % [-]
 
 geo.LiftingSurface.perfil(1,3)	= aeronave.asa1(7);                         % [-] Perfis da asa inferior
 
+geo.LiftingSurface.incidence(1,1)  = aeronave.asa1(8);
+% (superfice (1asa, 2 eH), se??o (1 raiz 2 meio 3 ponta))
 %pode colocar no vetor aeronave.asa1 se quiser
-geo.LiftingSurface.twist(1,1) = aeronave.asa1(9);
-geo.LiftingSurface.twist(1,2) = aeronave.asa1(10);
-geo.LiftingSurface.twist(1,3) = aeronave.asa1(11);
+geo.LiftingSurface.twist(1,1) = 0;
+geo.LiftingSurface.twist(1,2) = 0;
+geo.LiftingSurface.twist(1,3) = 0;
 
-geo.LiftingSurface.twist(2,1) = aeronave.eh(7);
-geo.LiftingSurface.twist(2,2) = aeronave.eh(8);
+geo.LiftingSurface.twist(2,1) = 0;
+geo.LiftingSurface.twist(2,2) = 0;
 
 % EMPENAGEM HORIZONTAL
 geo.LiftingSurface.B(surfacenum,1)          = aeronave.eh(1);               % [m] Envergadura da EH
 geo.LiftingSurface.c(surfacenum,1)          = aeronave.eh(2); 			    % [m] corda da raiz da EH
-geo.LiftingSurface.pos(surfacenum,3)        = aeronave.eh(6);               % [m] Altura da EH a partir da asa inferior
-geo.LiftingSurface.perfil(surfacenum,1)     = aeronave.eh(3);               % [-] Perfil da EH
-geo.LiftingSurface.incidence(surfacenum,1)  = aeronave.eh(4);               % [deg] Incidencia da eh
-geo.LiftingSurface.tau  			        = aeronave.eh(5); 				% [-] Efetividade do profundor (tau)
-
+geo.LiftingSurface.perfil(surfacenum,1)     = aeronave.eh(3);               % [m] Altura da EH a partir da asa inferior
+geo.LiftingSurface.incidence(surfacenum,1)  = aeronave.eh(4);               % [-] Perfil da EH
+geo.LiftingSurface.tau                      = aeronave.eh(5);               % [deg] Incidencia da eh
+geo.LiftingSurface.pos(surfacenum,3)        = aeronave.eh(6); 				% [-] Efetividade do profundor (tau)
+geo.LiftingSurface.le   			        = aeronave.eh(7);
 % EMPENAGEM VERTICAL
 geo.ev.B        = aeronave.ev(1);                                           % [m] envergadura da EV
 geo.ev.posEH    = aeronave.ev(2);                                           % [m] Posicao do centro da EV em relacao ao CA da EH
 geo.ev.perfil   = aeronave.ev(3);                                           % [m] perfil da EV
 
 % MOTO-PROPULSOR
-geo.mp.pos_gap  = aeronave.outros(4);                                       % [m] Posi√ß√£o do motor em z em rela√ß√£o ao gap
+geo.mp.pos_gap  = aeronave.outros(4);                                       % [m] Posi????o do motor em z em rela????o ao gap
 geo.mp.conjunto = aeronave.outros(3);                                       % [-] indice do conjunto moto-propulsor selecionado (ver funcao empuxo)
 geo.bico        = 0.0675;                                                   % [m] 
 
@@ -97,7 +99,7 @@ geo.cg.v        = aeronave.outros(2);                                       % [-
 %% ==================== Definicao das dimensoes da asa ====================
 for i=1:surfacenum-1
     % Numero de secoes das asas
-    geo.LiftingSurface.section_num(i,1) = 2; %deixa 2 secoes mesmo? (vc vai analisar o que È mais v·lido)
+    geo.LiftingSurface.section_num(i,1) = 2; %deixa 2 secoes mesmo? (vc vai analisar o que ? mais v?lido)
     
 	% Area das asas
 	geo.LiftingSurface.Sw(i,1) = ((geo.LiftingSurface.B(i)).^2)./(geo.LiftingSurface.AR(i));
@@ -134,7 +136,7 @@ geo.LiftingSurface.pos(1,3) = 0;
 %geo.LiftingSurface.pos(2,3) = geo.LiftingSurface.Gap;
 
 
-%esse comprimento era pra regular, pois tinham limitaÁ„o de comp
+%esse comprimento era pra regular, pois tinham limita??o de comp
 %geo.comprimento = 3.2 - geo.LiftingSurface.B(1,1) - 0.01;
 
 %% ==================== Definicao das dimensoes da eh =====================
@@ -176,9 +178,9 @@ geo.LiftingSurface.AR(surfacenum,1) = (geo.LiftingSurface.B(surfacenum)^2)/geo.L
 
 geo.LiftingSurface.pos(surfacenum,1) = geo.LiftingSurface.le;
 geo.LiftingSurface.pos(surfacenum,2) = 0;
-geo.LiftingSurface.pos(surfacenum,3) = geo.LiftingSurface.pos(surfacenum,3); %mudei para 2 % deixamos o 3, pois ele se refere a posicao no 3 eixo, que È o z, no caso, a altura
+geo.LiftingSurface.pos(surfacenum,3) = geo.LiftingSurface.pos(surfacenum,3); %mudei para 2 % deixamos o 3, pois ele se refere a posicao no 3 eixo, que ? o z, no caso, a altura
 %% ==================== Distribuicao das malhas ===========================
-geo.LiftingSurface.Mesh.Definido = [1;1;1];  % Define se utilizara as distribuicoes pre-definidas
+geo.LiftingSurface.Mesh.Definido = [0;0];  % Define se utilizara as distribuicoes pre-definidas
 
 % Fator de densidade de cada estacao
 densi_central = 0.81;   

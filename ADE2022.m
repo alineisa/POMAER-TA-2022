@@ -21,24 +21,14 @@ tempoi = clock;
 
        OB = [
 			% ASAS
-            6.50    7.00 		% 01 [ ] Alongamento da asa inferior
-           	7.50    8.00  		% 02 [ ] Alongamento da asa superior
-            0.57    0.65       	% 03 [ ] Tamanho percentual da estacao central da asa superior
-			0.50    0.70		% 04 [ ] Afilamento da estacao da ponta da asa inferior
-			0.48    0.66		% 05 [ ] Afilamento da estacao da ponta da asa superior
-            % PERFIS DA ASA INFERIOR
-		    1.00    4.99   	    % 06 [ ] Cambra perfil 1.1 e 1.2           (MH81_2_1)
-            0.00    3.00   	    % 07 [ ] Incidencia perfil 1.1             (MH81_2_1)
-           -2.00    2.00   	    % 08 [ ] Incidencia perfil 1.2             (MH81_2_1)
-           -4.00    2.00   	    % 09 [ ] Incidencia perfil 1.3             (MH78_4_1)
-            % PERFIS DA ASA SUPERIOR
-		    1.00    4.99   	    % 10 [ ] Cambra perfil 2.1 e 2.2           (WTU_01_1_1)
-            1.00    4.99   	    % 11 [ ] Cambra perfil 2.3                 (MH84_4_2)            
-		    0.00    3.00   	    % 12 [ ] Incidencia perfil 2.1             (WTU_01_1_1)
-           -2.00    2.00   	    % 13 [ ] Incidencia perfil 2.2             (WTU_01_1_1) 
-           -4.00    2.00   	    % 14 [ ] Incidencia perfil 2.3             (WTU_01)    
+            6.50    7.00 		% 01 [ ] Alongamento da asa
+            0.20    0.80       	% 02 [ ] Tamanho percentual da esta??o central
+			0.50    0.70		% 03 [ ] Afilamento da estacao da ponta da asa
+		    0.00    0.99   	    % 04 [ ] Perfil da asa
+            0.00    5.00        % 05 [graus] Incidencia da asa
             % EMPENAGEM HORIZONTAL
-            1.46    1.60        % 15 [ ] Envergadura da empenagem horizontal (x2l_v3_2_1)
+            1.46    1.60        % 06 [m] Envergadura da empenagem horizontal
+            0.50    1.50        % 07 [m] le
 			];
 % =================================================================================
 			 

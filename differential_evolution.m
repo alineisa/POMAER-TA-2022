@@ -1,6 +1,6 @@
 function [bestmem,bestval,nfeval, Individuos_best, guilherme] = differential_evolution(fname,VTR,D,XVmin,XVmax,y,NP,itermax,F,CR,strategy,refresh,icontador);
 
-% Variáveis para backup
+% Vari?veis para backup
 reutilizar.ativo = 0; 
 reutilizar.itermax = itermax;
 
@@ -93,7 +93,7 @@ end
 % fprintf(1,' ===================================================================================================================\n');
 % fprintf(1,'                          DIFFERENTIAL EVOLUTION ALGORITHM WITH ADAPTIVE POPULATION SIZE                      \n');
 % fprintf(1,' ===================================================================================================================\n');
-% fprintf(1,'   Strategy implemented by Fran Sérgio Lobato - 16-Sep-2008 \n');
+% fprintf(1,'   Strategy implemented by Fran S?rgio Lobato - 16-Sep-2008 \n');
 % fprintf(1,' ===================================================================================================================\n');
   
 while (iter <= itermax)% & (abs(bestval-worst) > VTR))
@@ -277,7 +277,7 @@ end %---end for imember=1:NP
  
 if (refresh > 0)
     if (rem(iter,refresh) == 0)
-       fprintf('Otimização nº: %d\n', icontador)
+       fprintf('Otimiza??o n?: %d\n', icontador)
        fprintf(1,'Iteration: %d,  Best: %1.4f,  F: %1.2f,  CR: %1.2f,  NP: %d\n',iter,bestval,F,CR,NP);        
     end
 end

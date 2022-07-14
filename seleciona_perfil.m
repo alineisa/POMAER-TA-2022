@@ -3,7 +3,7 @@
 function [perfil] = seleciona_perfil(choice_perf)
 % Primeira selecao com MHs
     if choice_perf == 0
-        perfil = 'BA7_top10.mat';  
+        perfil = 'BA7_top10_WTU_01.mat';  
     elseif choice_perf == 1
        	perfil = 'MH78.mat';
 	elseif choice_perf == 2

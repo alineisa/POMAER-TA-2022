@@ -11,7 +11,7 @@ deflexao = -15;                                                             % De
 flc.aoa = [-1 0 ard.alpha_estol];                                           % Aoa de analise no VLM
 flc.Voo = 11.1;                                                             % Velocidade de analise
 tp_xcg = 0.025;                                                             % Distancia em X entre o TP e o CG
-tp_zcg = geo.cg.v;                                                             % Distancia em Z entre o TP e o CG
+tp_zcg = geo.cg.v;                                                          % Distancia em Z entre o TP e o CG
 %% =================== Apenas pegando alguns valores ======================
 tal = geo.LiftingSurface.tau;
 penal = 0;
@@ -30,7 +30,7 @@ if sim.paralelo
 else
     coeffs = VLManda(geo,flc,sim,0,'-LiftingSurfaces');
 end
-%% ======================= InÃ­cio do Loop de CG ===========================
+%% ======================= In????cio do Loop de CG ===========================
 for kk = 0.23:0.01:0.29
     geo.cg.h = kk;
     geo.cg.pos(1)   = (geo.cg.h-0.25)*geo.LiftingSurface.c(1,3);
@@ -86,7 +86,7 @@ CLalphadef = (coeffseh(1).Coeffs(1,end).CL - coeffseh(1).Coeffs(1,1).CL)/(flc.ao
 CLpartmove = tal*CLalphadef*deflexao*coeffseh(1).Coeffs(1,1).Sref/coeffs(1).Coeffs(1,1).Sref;
 std.CLprof = CLpartmove;
 Mprof = neta*[0 -geo.LiftingSurface.pos(3,3) geo.LiftingSurface.pos(3,2); geo.LiftingSurface.pos(3,3) 0 -geo.LiftingSurface.pos(3,1); -geo.LiftingSurface.pos(3,2) geo.LiftingSurface.pos(3,1) 0]*([cosd(aoa(end)) 0 -sind(aoa(end));0 1 0;sind(aoa(end)) 0 cosd(aoa(end))]*[0;0;-CLpartmove]);
-Cm_prof = Mprof(2)/coeffs(1).MAC;                                        %Calculo Cm profundor para def mÃƒÆ’Ã‚Â¡x e alfa mÃƒÆ’Ã‚Â¡x
+Cm_prof = Mprof(2)/coeffs(1).MAC;                                        %Calculo Cm profundor para def m??????????????????x e alfa m??????????????????x
 for j=1:3                                                          %Cm asas para alfa 0
     M = [0 -geo.LiftingSurface.pos(j,3) geo.LiftingSurface.pos(j,2); geo.LiftingSurface.pos(j,3) 0 -(geo.LiftingSurface.pos(j,1)); -geo.LiftingSurface.pos(j,2) (geo.LiftingSurface.pos(j,1)) 0]*([cosd(aoa(end)) 0 -sind(aoa(end));0 1 0;sind(aoa(end)) 0 cosd(aoa(end))]*[-coeffs(j).Coeffs(1,3).CD;0;-coeffs(j).Coeffs(1,3).CL]);
     cm(j) = M(2)/coeffs(1).MAC + coeffs(j).Coeffs(1,3).Cm25;
@@ -94,7 +94,7 @@ end
 Cm_total = sum(cm) + Cmtm  + Cm_prof;                    
 if Cm_total < 0
     penal = 1;
-    fprintf('Aeronave nÃ£o trimÃ¡vel para o CG = %.3f\n',geo.cg.h)
+    fprintf('Aeronave n????o trim????vel para o CG = %.3f\n',geo.cg.h)
 end
 
 % if ~penal
