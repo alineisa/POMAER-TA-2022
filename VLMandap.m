@@ -320,6 +320,7 @@ if length(flc.Voo) > 1
 %             [results]                     = NL_VLMp(plane,fltcond,'-append','-itermax',sim.intermax);
         end   
     end
+    aux_penal = 0;
     for k=1:length(plane.LiftingSurfaces)
         for i=1:length(flc.Voo)
             ard(k).Coeffs(i).CL             = CL(k,i); 
@@ -327,7 +328,11 @@ if length(flc.Voo) > 1
             ard(k).Coeffs(i).Cm25           = Cm25(k,i);
         end
 %             ard(k).Coeffs                = plane.LiftingSurfaces(k).Aero.Coeffs;
-            [ard(k).Coeffs]              = filtro_coef(ard(k).Coeffs);   %Filtro estatistico de divergencias
+            [ard(k).Coeffs, ard(k).penal]              = filtro_coef(ard(k).Coeffs);   %Filtro estatistico de divergencias
+            % =================
+%             ard(k).penal = filtro_coef2(ard(k).Coeffs);
+            aux_penal = max(ard(k).penal,aux_penal);
+            % ==========================
             ard(k).Coeffs(1,1).Sref      = plane.LiftingSurfaces(k).Geo.Area.Sref;
             ard(k).MACXYZ                = plane.LiftingSurfaces(k).Geo.MAC_Pos;
             if sim.dist
@@ -337,14 +342,14 @@ if length(flc.Voo) > 1
             ard(k).MACg                  = plane.Geo.MAC;
             ard(k).MACXYZg               = plane.Geo.MAC_Pos;
             ard(k).MAC                   = plane.LiftingSurfaces(k).Geo.MAC;           
-       
+    end  
+    ard(length(plane.LiftingSurfaces)+1).penal = aux_penal;       
         if sim.dist
             for i=1:length(flc.Voo)
                 ard(1).Loads(i).cl  =  dist1(:,i)'; 
                 ard(2).Loads(i).cl  =  dist2(:,i)';
             end
         end
-    end  
 else
     for j=1:length(flc.Voo)
         parfor i=1:length(flc.aoa)
@@ -359,7 +364,8 @@ else
             fltcond.UpdateRe;
             [CL(:,i),CD(:,i),Cm25(:,i),dist1(:,i),dist2(:,i)] = NL_VLMp(plane,fltcond,'-itermax',sim.intermax)
 %             [results]                     = NL_VLMp(plane,fltcond,'-append','-itermax',sim.intermax);
-        end    
+        end
+        aux_penal = 0;
         for k=1:length(plane.LiftingSurfaces)
             for i=1:length(flc.aoa)
                 ard(k).Coeffs(i).CL             = CL(k,i); 
@@ -367,7 +373,11 @@ else
                 ard(k).Coeffs(i).Cm25           = Cm25(k,i);
             end
 %             ard(k).Coeffs                = plane.LiftingSurfaces(k).Aero.Coeffs;
-            [ard(k).Coeffs]              = filtro_coef(ard(k).Coeffs);   %Filtro estatistico de divergencias
+            [ard(k).Coeffs, ard(k).penal]              = filtro_coef(ard(k).Coeffs);   %Filtro estatistico de divergencias
+            % =================
+%             ard(k).penal = filtro_coef2(ard(k).Coeffs);
+            aux_penal = max(ard(k).penal,aux_penal);
+            % ==========================
             ard(k).Coeffs(1,1).Sref      = plane.LiftingSurfaces(k).Geo.Area.Sref;
             ard(k).MACXYZ                = plane.LiftingSurfaces(k).Geo.MAC_Pos;
             if sim.dist
@@ -378,6 +388,7 @@ else
             ard(k).MACXYZg               = plane.Geo.MAC_Pos;
             ard(k).MAC                   = plane.LiftingSurfaces(k).Geo.MAC;           
         end
+        ard(length(plane.LiftingSurfaces)+1).penal = aux_penal;
         if sim.dist
             for i=1:length(flc.aoa)
                 ard(1).Loads(i).cl  = dist1(:,i)'; 

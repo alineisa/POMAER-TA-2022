@@ -20,6 +20,7 @@ function [ard] = VLManda(geo,flc,sim,plotar,varargin)
 %   -beta                  - Roda o VLM com beta
 %   -PlotPolar             - Plotar a PlotPolar
 %   -PlotGeo               - Plotar o Geo para acompanhamento
+%   -SavePlane
 % (nao recomenda rodar EV junto com wing ou EH).
 
 clear plane.LiftingSurfaces;
@@ -35,6 +36,7 @@ EV=false;
 beta=false;
 primeira=true;
 PlotPolar=false;
+SavePlane=false;
 
 i=1;
 while i<=length(varargin)
@@ -57,6 +59,10 @@ while i<=length(varargin)
         case '-PlotPolar'
             PlotPolar = true;
             i=i+1;
+         case '-SavePlane'
+            SavePlane = true;
+            nome = varargin{i+1};
+            i=i+2;
     end
 end
 
@@ -296,7 +302,12 @@ end
         plane.PlotGeo('-clf')
         view([90,90])
     end
-    
+   
+    if SavePlane
+		plane.Save('-file',nome,'-w')
+        ard = 0;
+        return   
+    end
 %% =========================== Fligth Conditions ==========================
 
     fltcond                                     = FlightConditions;         %Inicia flight conditions
@@ -358,10 +369,15 @@ end
                 [results]                     = NL_VLM(plane,fltcond,'-append','-itermax',sim.intermax);
             end
         end
-
+        
+        aux_penal = 0;
         for k=1:length(plane.LiftingSurfaces)
                 ard(k).Coeffs                = plane.LiftingSurfaces(k).Aero.Coeffs;
-                [ard(k).Coeffs]              = filtro_coef(ard(k).Coeffs);   %Filtro estatistico de divergencias
+                [ard(k).Coeffs, ard(k).penal]              = filtro_coef(ard(k).Coeffs);   %Filtro estatistico de divergencias
+                % =================
+%                 ard(k).penal = filtro_coef2(ard(k).Coeffs);
+                aux_penal = max(ard(k).penal,aux_penal);
+                % ==========================
                 ard(k).Coeffs(1,1).Sref      = plane.LiftingSurfaces(k).Geo.Area.Sref;
                 ard(k).MACXYZ                = plane.LiftingSurfaces(k).Geo.MAC_Pos;
                 if sim.dist
@@ -382,8 +398,10 @@ end
 %               ard(i,k)                = plane.LiftingSurfaces(i).Aero.Coeffs;
         end
         ard(k+1).Coeffs                     = plane.Aero.Coeffs;            % Coeffs aerodinamicos globais da aeronave
-    
+        
+        ard(length(plane.LiftingSurfaces)+1).penal = aux_penal;
 %    end
+
 	
     if PlotPolar
         plane.PlotPolar;

@@ -60,11 +60,11 @@ geo.LiftingSurface.lamb(1,2) 	= aeronave.asa1(4);                               
 
 geo.LiftingSurface.perfil(1,1)	= aeronave.asa1(5);                         % [-] Perfis da asa inferior
 
-geo.LiftingSurface.perfil(1,2)	= aeronave.asa1(6);                         % [-] Perfis da asa inferior
+geo.LiftingSurface.perfil(1,2)	= geo.LiftingSurface.perfil(1,1);                      % [-] Perfis da asa inferior
 
-geo.LiftingSurface.perfil(1,3)	= aeronave.asa1(7);                         % [-] Perfis da asa inferior
+geo.LiftingSurface.perfil(1,3)	= aeronave.asa1(6);                         % [-] Perfis da asa inferior
 
-geo.LiftingSurface.incidence(1,1)  = aeronave.asa1(8);
+geo.LiftingSurface.incidence(1,1)  = aeronave.asa1(7);
 % (superfice (1asa, 2 eH), se??o (1 raiz 2 meio 3 ponta))
 %pode colocar no vetor aeronave.asa1 se quiser
 geo.LiftingSurface.twist(1,1) = 0;
