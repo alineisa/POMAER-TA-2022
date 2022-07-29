@@ -232,6 +232,7 @@ geo.cg.pos(3)   = geo.cg.v;                                                 % [m
 % Moto-propulsor
 geo.mp.pos(1) = 0;                                                          % [m] Posicao do motor em x
 geo.mp.pos(2) = 0;                                                          % [m] Posicao do motor em y
+geo.mp.pos(3)= 0.15;
 %geo.mp.pos(3) = geo.mp.pos_gap;
 % [m] Posicao do motor em z - nao tem gap
 

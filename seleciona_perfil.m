@@ -14,12 +14,10 @@ function [perfil] = seleciona_perfil(choice_perf)
         perfil = 'MH82.mat';
     elseif choice_perf == 5
         perfil = 'MH84.mat';
-    elseif choice_perf ==6
-        perfil = 'NACA-3412.mat';
-    elseif choice_perf == 7
+    elseif choice_perf == 6
         perfil = 's1223.mat';
-    elseif choice_perf == 8
-        perfil = '';
+    elseif choice_perf == 7
+        perfil = 'NACA0012';
 %colocar na pasta posteriormente os perfis que faltam (mh84)
 % Segunda selecao com hipersustentadores 
 
@@ -39,11 +37,11 @@ function [perfil] = seleciona_perfil(choice_perf)
 %         perfil = 'ETW_05.mat';
         
 % Empenagem
-	elseif choice_perf == 10
-        perfil = 'NACA0012';
-	elseif choice_perf == 11
-        perfil = 'NACA0015';
-    elseif choice_perf == 12
-        perfil = 'x2l_v3.mat';
-    end
+% 	elseif choice_perf == 10
+%         perfil = 'NACA0012';
+% 	elseif choice_perf == 11
+%         perfil = 'NACA0015';
+%     elseif choice_perf == 12
+%         perfil = 'x2l_v3.mat';
+%     end
 end

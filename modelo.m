@@ -2,7 +2,7 @@ function [result] = modelo(x,~,individuo)
 % MODELO DE OTIMIZACAO
 % TUCANO 2021 - CLASSE REGULAR
 % Autores: Filipe Franca
-x=[4.4582548666528 0.336096641016638 0.562953602732129 0.107787356210436 0.346001976895613 1.86703581990955 0.415167243894771 1.43715998170697 0.297968361665727 0.548898190060895]
+
 % PARAMETROS DA SIMULACAO
 tic;                % inicio da contagem de tempo
 sim.paralelo  = 0;  % Indica se usa ou n??o processamento paralelo
@@ -35,9 +35,9 @@ sim.ajuste   = 1;   % [-] Uso de curvas polinomiais ou interpoladas
 
 aeronave.asa1    = [1.99 x(1) x(2) x(3) floor(x(4)) floor(x(5)) floor(x(6))];
 % ['Envergadura' 'Alongamento' 'Estacao central' 'Afilamento da ponta' 'Perfil1' 'Perfil2' 'Incidencia da Asa' ] 
-aeronave.eh      = [x(7) x(9) 10 0 1 x(10) x(8)];
+aeronave.eh      = [x(7) x(9) 7 0 1 x(10) x(8)];
 % ['Envergadura' 'Corda' 'Perfil' 'Incidencia' 'Efetividade' 'Altura[metros]' 'le'];
-aeronave.ev      = [0.23 0.00 10];
+aeronave.ev      = [0.23 0.00 7];
 % ['Envergadura da ev' 'Posicao do centro em relacao ao CA da EH' 'Perfil EV'];
 aeronave.outros  = [0.23 0.45 3 0.45];
 % ['Posicao do CG em funcao da corda' 'Posicao vertical do CG ' 'Grupo moto-propulsor' 'Posicao vertical do motor];
@@ -49,7 +49,7 @@ aeronave.outros  = [0.23 0.45 3 0.45];
 [flc] = condicoesVOO();
 
 % PLOTAR
-VLManda(geo,flc,sim,2,'-LiftingSurfaces');% So colar na command Window
+% VLManda(geo,flc,sim,2,'-LiftingSurfaces');% So colar na command Window
 
 %% ------------------------- AERODINAMICA ---------------------------------
 % Calculo do estol

@@ -102,12 +102,12 @@ end
 % figure
 % plot(alpha_plot(2:end),-Cm_alpha./CL_alpha)
 % title('Margem estatica')
-figure
-plot(alpha_plot(2:end),Cm_alpha)
-title('Cm_alpha')
-figure
-plot(alpha_plot(2:end),CL_alpha)
-title('CL_alpha')
+% figure
+% plot(alpha_plot(2:end),Cm_alpha)
+% title('Cm_alpha')
+% figure
+% plot(alpha_plot(2:end),CL_alpha)
+% title('CL_alpha')
 
 % 
 % grid on;

@@ -24,8 +24,8 @@ tempoi = clock;
             4.00    7.00 		% 01 [ ] Alongamento da asa
             0.20    0.80       	% 02 [ ] Tamanho percentual da esta??o central
 			0.50    0.70		% 03 [ ] Afilamento da estacao da ponta da asa
-		    0.00    0.99   	    % 04 [ ] Perfil da asa secao 1
-            0.00    0.99        % 05 [ ] Perfil da asa secao 2
+		    0.00    6.99   	    % 04 [ ] Perfil da asa secao 1
+            0.00    6.99        % 05 [ ] Perfil da asa secao 2
             0.00    5.00        % 06 [graus] Incidencia da asa
             % EMPENAGEM HORIZONTAL
             0.30    0.70        % 07 [m] Envergadura da empenagem horizontal
